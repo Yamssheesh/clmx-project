@@ -1,0 +1,3727 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#05070c">
+
+<title>CLMX PROJECT — Technology & Development</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root{
+    --bg:#030406;
+    --bg2:#070a10;
+    --card:rgba(255,255,255,.045);
+    --card2:rgba(255,255,255,.075);
+    --white:#f5f7fb;
+    --muted:#858b98;
+    --dim:#4e5561;
+    --line:rgba(255,255,255,.09);
+    --blue:#5b8cff;
+    --blue2:#2e5fff;
+    --ease:cubic-bezier(.22,1,.36,1);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+    background:var(--bg);
+}
+
+body{
+    background:
+        radial-gradient(
+            circle at 50% -20%,
+            rgba(50,95,255,.18),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 100% 55%,
+            rgba(40,75,180,.08),
+            transparent 30%
+        ),
+        var(--bg);
+    color:var(--white);
+    font-family:Inter,-apple-system,BlinkMacSystemFont,
+        "SF Pro Display","SF Pro Text",sans-serif;
+    overflow-x:hidden;
+}
+
+body.loading{
+    overflow:hidden;
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+::selection{
+    background:rgba(90,130,255,.3);
+}
+
+/* =====================================================
+   PRELOADER
+===================================================== */
+
+.preloader{
+    position:fixed;
+    inset:0;
+    z-index:99999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#030406;
+    transition:opacity 1s var(--ease),
+               visibility 1s var(--ease);
+}
+
+.preloader.hide{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+}
+
+.loader-content{
+    text-align:center;
+}
+
+.loader-brand{
+    font-size:clamp(48px,12vw,100px);
+    font-weight:800;
+    letter-spacing:-.1em;
+    line-height:.8;
+
+    background:
+        linear-gradient(
+            180deg,
+            #fff,
+            #b9c9ff 40%,
+            #4e6db8
+        );
+
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+}
+
+.loader-line{
+    width:170px;
+    height:1px;
+    margin:28px auto 0;
+    background:rgba(255,255,255,.1);
+    overflow:hidden;
+}
+
+.loader-line::after{
+    content:"";
+    display:block;
+    width:45%;
+    height:100%;
+    background:#7ea0ff;
+    box-shadow:0 0 15px #5b8cff;
+    animation:loader 1.4s var(--ease) infinite;
+}
+
+@keyframes loader{
+    from{transform:translateX(-130%)}
+    to{transform:translateX(350%)}
+}
+
+.loader-text{
+    margin-top:15px;
+    color:#555b67;
+    font-size:8px;
+    letter-spacing:.24em;
+}
+
+/* =====================================================
+   AMBIENT
+===================================================== */
+
+.ambient{
+    position:fixed;
+    width:500px;
+    height:500px;
+    border-radius:50%;
+    filter:blur(130px);
+    pointer-events:none;
+    z-index:-3;
+    opacity:.2;
+    animation:orb 17s ease-in-out infinite alternate;
+}
+
+.orb1{
+    top:-280px;
+    left:-180px;
+    background:#285cff;
+}
+
+.orb2{
+    top:35%;
+    right:-320px;
+    background:#1748d9;
+    animation-delay:-5s;
+}
+
+.orb3{
+    bottom:-360px;
+    left:25%;
+    background:#4779ff;
+    animation-delay:-9s;
+}
+
+@keyframes orb{
+    from{
+        transform:translate3d(0,0,0) scale(1);
+    }
+    to{
+        transform:translate3d(70px,60px,0) scale(1.16);
+    }
+}
+
+/* =====================================================
+   GRID
+===================================================== */
+
+.grid-bg{
+    position:fixed;
+    inset:0;
+    z-index:-4;
+    pointer-events:none;
+    opacity:.025;
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,.35) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.35) 1px,
+            transparent 1px
+        );
+
+    background-size:80px 80px;
+
+    mask-image:
+        linear-gradient(
+            to bottom,
+            #000,
+            transparent 75%
+        );
+}
+
+/* =====================================================
+   NAVBAR
+===================================================== */
+
+.navbar{
+    position:fixed;
+    z-index:5000;
+    top:18px;
+    left:50%;
+    transform:translateX(-50%);
+
+    width:min(1120px,calc(100% - 28px));
+    height:66px;
+
+    padding:8px 9px 8px 23px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    background:rgba(10,13,20,.63);
+    border:1px solid var(--line);
+    border-radius:999px;
+
+    backdrop-filter:blur(35px) saturate(180%);
+    -webkit-backdrop-filter:blur(35px) saturate(180%);
+
+    box-shadow:
+        0 25px 80px rgba(0,0,0,.42),
+        inset 0 1px 0 rgba(255,255,255,.07);
+
+    transition:
+        width .65s var(--ease),
+        height .65s var(--ease),
+        top .65s var(--ease),
+        background .5s ease;
+}
+
+.navbar.scrolled{
+    top:10px;
+    width:min(880px,calc(100% - 20px));
+    height:58px;
+    background:rgba(7,9,14,.82);
+}
+
+.brand{
+    font-size:14px;
+    font-weight:800;
+    letter-spacing:-.055em;
+}
+
+.brand span{
+    color:#668dff;
+}
+
+.nav-links{
+    display:flex;
+    align-items:center;
+    gap:28px;
+}
+
+.nav-links a{
+    color:#858b98;
+    font-size:10px;
+    font-weight:500;
+    transition:.35s var(--ease);
+}
+
+.nav-links a:hover{
+    color:#fff;
+}
+
+.nav-contact{
+    min-width:82px;
+    height:40px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:999px;
+
+    background:#f5f7fb;
+    color:#050609;
+
+    font-size:10px;
+    font-weight:700;
+
+    transition:.45s var(--ease);
+}
+
+.nav-contact:hover{
+    transform:scale(1.05);
+    box-shadow:
+        0 10px 40px rgba(100,140,255,.2);
+}
+
+/* =====================================================
+   CURSOR
+===================================================== */
+
+.cursor{
+    position:fixed;
+    width:320px;
+    height:320px;
+    border-radius:50%;
+    pointer-events:none;
+    z-index:-1;
+
+    transform:translate(-50%,-50%);
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(70,110,255,.11),
+            transparent 68%
+        );
+
+    filter:blur(5px);
+}
+
+@media(pointer:coarse){
+    .cursor{
+        display:none;
+    }
+}
+
+/* =====================================================
+   GENERAL
+===================================================== */
+
+.section{
+    width:min(1160px,calc(100% - 34px));
+    margin:auto;
+    padding:145px 0;
+}
+
+.section-label{
+    display:flex;
+    align-items:center;
+    gap:13px;
+
+    color:#626975;
+
+    font-size:9px;
+    font-weight:600;
+    letter-spacing:.18em;
+
+    opacity:0;
+    transform:translateY(25px);
+
+    transition:1s var(--ease);
+}
+
+.section-label.show{
+    opacity:1;
+    transform:none;
+}
+
+.section-label span{
+    color:#fff;
+}
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.hero{
+    min-height:100svh;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    position:relative;
+
+    padding-top:105px;
+}
+
+.hero-content{
+    max-width:1050px;
+
+    opacity:0;
+    transform:translateY(45px) scale(.98);
+
+    animation:
+        heroIn 1.3s var(--ease) .2s forwards;
+}
+
+@keyframes heroIn{
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+.eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+
+    padding:9px 14px;
+
+    border:1px solid var(--line);
+    border-radius:999px;
+
+    background:rgba(255,255,255,.035);
+
+    backdrop-filter:blur(20px);
+
+    color:#8b92a0;
+
+    font-size:8px;
+    font-weight:600;
+    letter-spacing:.17em;
+}
+
+.status{
+    width:6px;
+    height:6px;
+
+    border-radius:50%;
+
+    background:#78a0ff;
+
+    box-shadow:
+        0 0 15px #5b8cff;
+
+    animation:status 2s infinite;
+}
+
+@keyframes status{
+    50%{
+        opacity:.35;
+        transform:scale(.65);
+    }
+}
+
+.hero h1{
+    margin-top:28px;
+
+    font-size:clamp(70px,15vw,175px);
+
+    line-height:.76;
+
+    letter-spacing:-.1em;
+
+    font-weight:800;
+}
+
+.hero h1 span{
+    display:block;
+
+    background:
+        linear-gradient(
+            180deg,
+            #fff 0%,
+            #d7e0ff 30%,
+            #6075ae 75%,
+            #303b57 100%
+        );
+
+    -webkit-background-clip:text;
+    background-clip:text;
+
+    color:transparent;
+}
+
+.hero-description{
+    max-width:650px;
+
+    margin:43px auto 0;
+
+    color:#858c99;
+
+    font-size:14px;
+    line-height:1.8;
+}
+
+.hero-actions{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+
+    margin-top:32px;
+}
+
+.btn{
+    min-height:51px;
+
+    padding:0 23px;
+
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+
+    border-radius:999px;
+
+    font-size:10px;
+    font-weight:600;
+
+    transition:.45s var(--ease);
+}
+
+.btn-primary{
+    background:#f5f7fb;
+    color:#030406;
+}
+
+.btn-primary:hover{
+    box-shadow:
+        0 20px 65px rgba(90,130,255,.2);
+}
+
+.btn-glass{
+    background:rgba(255,255,255,.045);
+    border:1px solid var(--line);
+
+    backdrop-filter:blur(20px);
+}
+
+.btn:hover{
+    transform:translateY(-3px);
+}
+
+.scroll-indicator{
+    position:absolute;
+    bottom:28px;
+    left:50%;
+    transform:translateX(-50%);
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    gap:10px;
+
+    color:#4f5662;
+
+    font-size:7px;
+    letter-spacing:.2em;
+}
+
+.scroll-line{
+    width:1px;
+    height:38px;
+
+    background:
+        linear-gradient(
+            #7195ff,
+            transparent
+        );
+
+    animation:scroll 2s infinite;
+}
+
+@keyframes scroll{
+    0%{
+        transform:scaleY(0);
+        transform-origin:top;
+    }
+
+    50%{
+        transform:scaleY(1);
+        transform-origin:top;
+    }
+
+    51%{
+        transform-origin:bottom;
+    }
+
+    100%{
+        transform:scaleY(0);
+        transform-origin:bottom;
+    }
+}
+
+/* =====================================================
+   INTRO
+===================================================== */
+
+.intro-text{
+    max-width:950px;
+    margin:70px 0 0 auto;
+
+    opacity:0;
+    transform:translateY(40px);
+
+    transition:1.1s var(--ease);
+}
+
+.intro-text.show{
+    opacity:1;
+    transform:none;
+}
+
+.intro-text p{
+    font-size:clamp(31px,5vw,64px);
+
+    line-height:1.06;
+
+    letter-spacing:-.065em;
+
+    font-weight:600;
+
+    margin-bottom:38px;
+}
+
+.intro-text p:first-child span{
+    color:#5f6980;
+}
+
+/* =====================================================
+   ABOUT
+===================================================== */
+
+.about-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+
+    gap:100px;
+
+    margin-top:75px;
+
+    opacity:0;
+    transform:translateY(45px);
+
+    transition:1.1s var(--ease);
+}
+
+.about-grid.show{
+    opacity:1;
+    transform:none;
+}
+
+.about-title h2{
+    font-size:clamp(50px,7vw,88px);
+
+    line-height:.92;
+
+    letter-spacing:-.075em;
+}
+
+.about-title span{
+    color:#65718a;
+}
+
+.about-content{
+    padding-top:12px;
+}
+
+.about-content p{
+    max-width:500px;
+
+    color:#858c99;
+
+    font-size:13px;
+    line-height:1.8;
+
+    margin-bottom:25px;
+}
+
+.about-content .large{
+    color:#f1f4fa;
+
+    font-size:22px;
+    line-height:1.45;
+}
+
+/* =====================================================
+   TEAM
+===================================================== */
+
+.team-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+
+    gap:15px;
+
+    margin-top:65px;
+}
+
+.team-card{
+    min-height:280px;
+
+    padding:30px;
+
+    position:relative;
+    overflow:hidden;
+
+    border:1px solid var(--line);
+    border-radius:30px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.07),
+            rgba(255,255,255,.025)
+        );
+
+    backdrop-filter:blur(30px);
+
+    opacity:0;
+    transform:translateY(40px);
+
+    transition:
+        opacity .9s var(--ease),
+        transform .8s var(--ease),
+        border-color .4s ease;
+}
+
+.team-card.show{
+    opacity:1;
+    transform:none;
+}
+
+.team-card::before{
+    content:"";
+
+    position:absolute;
+
+    width:230px;
+    height:230px;
+
+    top:-130px;
+    right:-90px;
+
+    border-radius:50%;
+
+    background:rgba(70,110,255,.12);
+
+    filter:blur(65px);
+}
+
+.team-number{
+    color:#59616f;
+
+    font-size:9px;
+
+    letter-spacing:.16em;
+}
+
+.team-avatar{
+    width:58px;
+    height:58px;
+
+    margin-top:48px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.13),
+            rgba(255,255,255,.035)
+        );
+
+    border:1px solid var(--line);
+
+    color:#dfe6ff;
+
+    font-size:20px;
+    font-weight:800;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.08);
+}
+
+.team-card h3{
+    margin-top:18px;
+
+    font-size:24px;
+
+    letter-spacing:-.05em;
+}
+
+.team-card p{
+    margin-top:8px;
+
+    color:#7d8593;
+
+    font-size:11px;
+
+    line-height:1.7;
+}
+
+/* =====================================================
+   SKILLS
+===================================================== */
+
+.section-heading{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+
+    gap:70px;
+
+    align-items:end;
+
+    margin-top:70px;
+
+    opacity:0;
+    transform:translateY(40px);
+
+    transition:1s var(--ease);
+}
+
+.section-heading.show{
+    opacity:1;
+    transform:none;
+}
+
+.section-heading h2{
+    font-size:clamp(52px,7vw,90px);
+
+    line-height:.92;
+
+    letter-spacing:-.075em;
+}
+
+.section-heading h2 span{
+    color:#64718a;
+}
+
+.section-heading p{
+    max-width:410px;
+
+    color:#858c99;
+
+    font-size:12px;
+
+    line-height:1.8;
+}
+
+.skills-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+
+    gap:15px;
+
+    margin-top:65px;
+}
+
+.glass-card{
+    position:relative;
+
+    min-height:330px;
+
+    padding:32px;
+
+    overflow:hidden;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.075),
+            rgba(255,255,255,.025)
+        );
+
+    border:1px solid var(--line);
+
+    border-radius:32px;
+
+    backdrop-filter:blur(30px) saturate(150%);
+    -webkit-backdrop-filter:blur(30px) saturate(150%);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.055),
+        0 35px 90px rgba(0,0,0,.18);
+
+    transform-style:preserve-3d;
+
+    opacity:0;
+    transform:translateY(45px);
+
+    transition:
+        opacity .9s var(--ease),
+        transform .7s var(--ease),
+        border-color .4s ease;
+}
+
+.glass-card.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.glass-card::before{
+    content:"";
+
+    position:absolute;
+
+    width:230px;
+    height:230px;
+
+    top:-140px;
+    right:-90px;
+
+    border-radius:50%;
+
+    background:rgba(70,105,255,.13);
+
+    filter:blur(65px);
+}
+
+.glass-card:hover{
+    border-color:rgba(110,145,255,.3);
+}
+
+.card-number{
+    color:#59616e;
+
+    font-size:9px;
+
+    letter-spacing:.15em;
+}
+
+.card-icon{
+    margin-top:55px;
+
+    font-size:28px;
+
+    color:#cbd6ff;
+
+    text-shadow:
+        0 0 25px rgba(80,120,255,.25);
+}
+
+.glass-card h3{
+    margin-top:18px;
+
+    font-size:22px;
+
+    letter-spacing:-.045em;
+}
+
+.glass-card p{
+    max-width:450px;
+
+    margin-top:10px;
+
+    color:#7f8794;
+
+    font-size:11px;
+
+    line-height:1.7;
+}
+
+.tags{
+    display:flex;
+    flex-wrap:wrap;
+
+    gap:6px;
+
+    margin-top:22px;
+}
+
+.tags span{
+    padding:6px 9px;
+
+    border:1px solid var(--line);
+
+    border-radius:999px;
+
+    color:#727b8a;
+
+    font-size:8px;
+
+    background:rgba(255,255,255,.02);
+}
+
+/* =====================================================
+   PROJECTS
+===================================================== */
+
+.projects{
+    margin-top:65px;
+}
+
+.project{
+    overflow:hidden;
+
+    border:1px solid var(--line);
+
+    border-radius:34px;
+
+    background:rgba(255,255,255,.03);
+
+    backdrop-filter:blur(25px);
+
+    opacity:0;
+    transform:translateY(50px);
+
+    transition:
+        opacity 1s var(--ease),
+        transform .8s var(--ease),
+        border-color .4s ease;
+}
+
+.project.show{
+    opacity:1;
+    transform:none;
+}
+
+.project:hover{
+    border-color:rgba(100,140,255,.28);
+}
+
+.project-visual{
+    position:relative;
+
+    min-height:430px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    overflow:hidden;
+
+    background:
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(55,95,255,.2),
+            transparent 38%
+        ),
+        linear-gradient(
+            145deg,
+            #10141d,
+            #050608
+        );
+}
+
+.project-visual::before,
+.project-visual::after{
+    content:"";
+
+    position:absolute;
+
+    border-radius:50%;
+
+    border:1px solid rgba(110,140,255,.12);
+}
+
+.project-visual::before{
+    width:350px;
+    height:350px;
+
+    animation:
+        projectRotate 13s linear infinite;
+}
+
+.project-visual::after{
+    width:220px;
+    height:220px;
+
+    border-color:rgba(255,255,255,.045);
+
+    animation:
+        projectRotate 9s linear infinite reverse;
+}
+
+@keyframes projectRotate{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+.project-label{
+    position:absolute;
+
+    top:25px;
+    left:28px;
+
+    color:#555d6a;
+
+    font-size:8px;
+
+    letter-spacing:.18em;
+}
+
+.project-logo{
+    position:relative;
+    z-index:2;
+
+    font-size:clamp(65px,11vw,140px);
+
+    font-weight:800;
+
+    letter-spacing:-.1em;
+
+    background:
+        linear-gradient(
+            #fff,
+            #657ebc
+        );
+
+    -webkit-background-clip:text;
+    background-clip:text;
+
+    color:transparent;
+
+    transition:transform .6s var(--ease);
+}
+
+.project:hover .project-logo{
+    transform:scale(1.06);
+}
+
+.project-info{
+    min-height:125px;
+
+    padding:27px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:25px;
+}
+
+.category{
+    color:#626a77;
+
+    font-size:8px;
+
+    letter-spacing:.15em;
+}
+
+.project-info h3{
+    margin-top:8px;
+
+    font-size:24px;
+
+    letter-spacing:-.05em;
+}
+
+.project-link{
+    color:#aab4c8;
+
+    font-size:10px;
+
+    white-space:nowrap;
+}
+
+.project-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+
+    gap:15px;
+
+    margin-top:15px;
+}
+
+.project-row .project-visual{
+    min-height:280px;
+}
+
+.project-row .project-info{
+    display:block;
+
+    min-height:155px;
+}
+
+.project-row .project-link{
+    display:inline-block;
+
+    margin-top:22px;
+}
+
+/* =====================================================
+   SERVICES
+===================================================== */
+
+.services-list{
+    margin-top:65px;
+
+    border-top:1px solid var(--line);
+}
+
+.service{
+    min-height:145px;
+
+    display:grid;
+    grid-template-columns:65px 1fr 40px;
+
+    align-items:center;
+
+    gap:25px;
+
+    border-bottom:1px solid var(--line);
+
+    opacity:0;
+    transform:translateX(-30px);
+
+    transition:
+        opacity .9s var(--ease),
+        transform .8s var(--ease),
+        padding .5s var(--ease),
+        background .5s ease;
+}
+
+.service.show{
+    opacity:1;
+    transform:none;
+}
+
+.service:hover{
+    padding-left:18px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(60,100,255,.045),
+            transparent
+        );
+}
+
+.service-num{
+    color:#5a6370;
+
+    font-size:9px;
+}
+
+.service h3{
+    font-size:24px;
+
+    letter-spacing:-.045em;
+}
+
+.service p{
+    max-width:650px;
+
+    margin-top:7px;
+
+    color:#7d8592;
+
+    font-size:11px;
+
+    line-height:1.7;
+}
+
+.service-arrow{
+    font-size:19px;
+
+    color:#a9bbff;
+
+    transition:.45s var(--ease);
+}
+
+.service:hover .service-arrow{
+    transform:translate(5px,-5px);
+}
+
+.note{
+    display:flex;
+    align-items:center;
+
+    gap:10px;
+
+    margin-top:22px;
+
+    color:#555d69;
+
+    font-size:9px;
+}
+
+/* =====================================================
+   STORE
+===================================================== */
+
+.store-box{
+    margin-top:65px;
+
+    min-height:390px;
+
+    position:relative;
+    overflow:hidden;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    border:1px solid var(--line);
+    border-radius:38px;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(60,100,255,.18),
+            transparent 45%
+        ),
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.065),
+            rgba(255,255,255,.025)
+        );
+
+    backdrop-filter:blur(30px);
+
+    opacity:0;
+    transform:translateY(45px);
+
+    transition:1s var(--ease);
+}
+
+.store-box.show{
+    opacity:1;
+    transform:none;
+}
+
+.store-glow{
+    position:absolute;
+
+    width:280px;
+    height:280px;
+
+    border-radius:50%;
+
+    background:rgba(60,100,255,.14);
+
+    filter:blur(90px);
+
+    animation:
+        storeGlow 6s ease-in-out infinite alternate;
+}
+
+@keyframes storeGlow{
+    from{
+        transform:scale(.8);
+        opacity:.5;
+    }
+
+    to{
+        transform:scale(1.2);
+        opacity:1;
+    }
+}
+
+.store-content{
+    position:relative;
+    z-index:2;
+
+    padding:30px;
+}
+
+.store-badge{
+    display:inline-flex;
+
+    padding:8px 13px;
+
+    border:1px solid var(--line);
+
+    border-radius:999px;
+
+    color:#7e8aa5;
+
+    background:rgba(255,255,255,.035);
+
+    font-size:8px;
+
+    letter-spacing:.16em;
+}
+
+.store-content h3{
+    margin-top:22px;
+
+    font-size:clamp(42px,7vw,75px);
+
+    line-height:.9;
+
+    letter-spacing:-.08em;
+}
+
+.store-content h3 span{
+    color:#657fbf;
+}
+
+.store-content p{
+    max-width:520px;
+
+    margin:25px auto;
+
+    color:#7f8795;
+
+    font-size:12px;
+
+    line-height:1.75;
+}
+
+.store-button{
+    display:inline-flex;
+
+    align-items:center;
+    gap:13px;
+
+    padding:15px 22px;
+
+    border-radius:999px;
+
+    background:#f5f7fb;
+
+    color:#030406;
+
+    font-size:10px;
+    font-weight:700;
+
+    transition:.45s var(--ease);
+}
+
+.store-button:hover{
+    transform:translateY(-4px) scale(1.03);
+
+    box-shadow:
+        0 20px 60px rgba(80,120,255,.18);
+}
+
+/* =====================================================
+   COMMUNITY
+===================================================== */
+
+.community-grid{
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:12px;
+
+    margin-top:65px;
+}
+
+.community-card{
+    min-height:190px;
+
+    padding:25px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+
+    border:1px solid var(--line);
+    border-radius:28px;
+
+    background:rgba(255,255,255,.035);
+
+    backdrop-filter:blur(25px);
+
+    opacity:0;
+    transform:translateY(35px);
+
+    transition:
+        opacity .8s var(--ease),
+        transform .7s var(--ease),
+        border-color .4s ease;
+}
+
+.community-card.show{
+    opacity:1;
+    transform:none;
+}
+
+.community-card:hover{
+    border-color:rgba(100,140,255,.3);
+}
+
+.community-icon{
+    width:42px;
+    height:42px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:14px;
+
+    background:rgba(80,120,255,.08);
+
+    border:1px solid rgba(100,140,255,.12);
+
+    color:#9eb4ff;
+
+    font-size:17px;
+}
+
+.community-card h3{
+    margin-top:25px;
+
+    font-size:18px;
+
+    letter-spacing:-.04em;
+}
+
+.community-card p{
+    margin-top:6px;
+
+    color:#737c8a;
+
+    font-size:10px;
+}
+
+.community-link{
+    margin-top:20px;
+
+    color:#a5b7ef;
+
+    font-size:9px;
+}
+
+/* =====================================================
+   CONTACT
+===================================================== */
+
+.contact{
+    padding-bottom:100px;
+}
+
+.contact-box{
+    min-height:640px;
+
+    position:relative;
+    overflow:hidden;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    border:1px solid var(--line);
+
+    border-radius:45px;
+
+    background:
+        radial-gradient(
+            circle at 50% 10%,
+            rgba(65,105,255,.2),
+            transparent 42%
+        ),
+        linear-gradient(
+            145deg,
+            #0e121b,
+            #050608
+        );
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.07),
+        0 45px 130px rgba(0,0,0,.4);
+
+    opacity:0;
+    transform:translateY(50px);
+
+    transition:1.1s var(--ease);
+}
+
+.contact-box.show{
+    opacity:1;
+    transform:none;
+}
+
+.contact-ring{
+    position:absolute;
+
+    width:450px;
+    height:450px;
+
+    border:1px solid rgba(110,140,255,.1);
+
+    border-radius:50%;
+
+    box-shadow:
+        0 0 100px rgba(70,110,255,.13),
+        inset 0 0 100px rgba(70,110,255,.06);
+
+    animation:
+        ring 10s ease-in-out infinite alternate;
+}
+
+@keyframes ring{
+    from{
+        transform:scale(.82) rotate(0);
+    }
+
+    to{
+        transform:scale(1.16) rotate(25deg);
+    }
+}
+
+.contact-content{
+    position:relative;
+
+    z-index:2;
+
+    padding:25px;
+}
+
+.contact-small{
+    color:#626b7a;
+
+    font-size:9px;
+
+    letter-spacing:.17em;
+}
+
+.contact h2{
+    margin-top:20px;
+
+    font-size:clamp(60px,9vw,110px);
+
+    line-height:.88;
+
+    letter-spacing:-.08em;
+}
+
+.contact h2 span{
+    color:#657ebc;
+}
+
+.contact p{
+    max-width:470px;
+
+    margin:33px auto;
+
+    color:#7c8593;
+
+    font-size:12px;
+
+    line-height:1.75;
+}
+
+.contact-buttons{
+    display:flex;
+
+    justify-content:center;
+
+    gap:10px;
+
+    flex-wrap:wrap;
+}
+
+.whatsapp{
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:13px;
+
+    padding:16px 22px;
+
+    border-radius:999px;
+
+    background:#f5f7fb;
+
+    color:#030406;
+
+    font-size:10px;
+
+    font-weight:700;
+
+    transition:.45s var(--ease);
+}
+
+.whatsapp:hover{
+    transform:
+        translateY(-4px)
+        scale(1.035);
+
+    box-shadow:
+        0 20px 65px rgba(90,130,255,.18);
+}
+
+.whatsapp.secondary{
+    background:rgba(255,255,255,.05);
+
+    border:1px solid var(--line);
+
+    color:#dfe5f2;
+}
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+footer{
+    width:min(1160px,calc(100% - 34px));
+
+    margin:auto;
+
+    padding:48px 0 28px;
+
+    border-top:1px solid var(--line);
+}
+
+.footer-top{
+    display:flex;
+
+    align-items:flex-start;
+
+    justify-content:space-between;
+}
+
+.footer-brand{
+    font-size:19px;
+
+    font-weight:800;
+
+    letter-spacing:-.055em;
+}
+
+.footer-top p{
+    color:#5b6370;
+
+    text-align:right;
+
+    font-size:9px;
+
+    line-height:1.8;
+}
+
+.footer-bottom{
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-top:75px;
+
+    color:#3f4651;
+
+    font-size:7px;
+
+    letter-spacing:.17em;
+}
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:760px){
+
+    .navbar{
+        top:11px;
+
+        width:calc(100% - 18px);
+
+        height:58px;
+
+        padding-left:17px;
+    }
+
+    .navbar.scrolled{
+        top:8px;
+
+        width:calc(100% - 14px);
+
+        height:54px;
+    }
+
+    .nav-links{
+        display:none;
+    }
+
+    .nav-contact{
+        min-width:72px;
+
+        height:38px;
+
+        padding:0 14px;
+    }
+
+    .section{
+        width:calc(100% - 28px);
+
+        padding:105px 0;
+    }
+
+    .hero{
+        min-height:100svh;
+
+        padding-top:95px;
+    }
+
+    .hero h1{
+        font-size:clamp(62px,18vw,105px);
+    }
+
+    .hero-description{
+        padding:0 12px;
+
+        margin-top:30px;
+
+        font-size:12px;
+    }
+
+    .hero-actions{
+        flex-direction:column;
+
+        padding:0 35px;
+    }
+
+    .btn{
+        width:100%;
+    }
+
+    .scroll-indicator{
+        bottom:18px;
+    }
+
+    .intro-text{
+        margin-top:52px;
+    }
+
+    .intro-text p{
+        font-size:34px;
+    }
+
+    .about-grid,
+    .section-heading{
+        grid-template-columns:1fr;
+
+        gap:35px;
+    }
+
+    .about-grid{
+        margin-top:55px;
+    }
+
+    .about-content .large{
+        font-size:20px;
+    }
+
+    .section-heading{
+        margin-top:55px;
+    }
+
+    .section-heading p{
+        font-size:11px;
+    }
+
+    .team-grid{
+        grid-template-columns:1fr;
+
+        margin-top:45px;
+    }
+
+    .skills-grid{
+        grid-template-columns:1fr;
+
+        margin-top:45px;
+    }
+
+    .glass-card{
+        min-height:305px;
+
+        padding:27px;
+    }
+
+    .card-icon{
+        margin-top:48px;
+    }
+
+    .projects{
+        margin-top:45px;
+    }
+
+    .project-visual{
+        min-height:310px;
+    }
+
+    .project-row{
+        grid-template-columns:1fr;
+    }
+
+    .project-row .project-visual{
+        min-height:250px;
+    }
+
+    .project-info{
+        display:block;
+    }
+
+    .project-link{
+        display:inline-block;
+
+        margin-top:18px;
+    }
+
+    .service{
+        grid-template-columns:32px 1fr 25px;
+
+        gap:10px;
+
+        min-height:155px;
+    }
+
+    .service h3{
+        font-size:19px;
+    }
+
+    .service p{
+        font-size:10px;
+    }
+
+    .store-box{
+        min-height:430px;
+
+        border-radius:32px;
+    }
+
+    .community-grid{
+        grid-template-columns:1fr;
+
+        margin-top:45px;
+    }
+
+    .community-card{
+        min-height:175px;
+    }
+
+    .contact-box{
+        min-height:590px;
+
+        border-radius:33px;
+    }
+
+    .contact h2{
+        font-size:60px;
+    }
+
+    .contact-ring{
+        width:330px;
+        height:330px;
+    }
+
+    .contact-buttons{
+        flex-direction:column;
+
+        padding:0 25px;
+    }
+
+    .whatsapp{
+        justify-content:center;
+
+        width:100%;
+    }
+
+    .footer-top{
+        display:block;
+    }
+
+    .footer-top p{
+        margin-top:18px;
+
+        text-align:left;
+    }
+
+    .footer-bottom{
+        margin-top:55px;
+    }
+}
+
+@media(prefers-reduced-motion:reduce){
+
+    *,
+    *::before,
+    *::after{
+        animation-duration:.01ms!important;
+
+        animation-iteration-count:1!important;
+
+        scroll-behavior:auto!important;
+
+        transition-duration:.01ms!important;
+    }
+}
+</style>
+</head>
+
+<body class="loading">
+
+<!-- =====================================================
+     PRELOADER
+===================================================== -->
+
+<div class="preloader" id="preloader">
+
+    <div class="loader-content">
+
+        <div class="loader-brand">
+            CLMX
+        </div>
+
+        <div class="loader-line"></div>
+
+        <div class="loader-text">
+            CLMX PROJECT / 2026
+        </div>
+
+    </div>
+
+</div>
+
+<div class="ambient orb1"></div>
+<div class="ambient orb2"></div>
+<div class="ambient orb3"></div>
+
+<div class="grid-bg"></div>
+
+<div class="cursor" id="cursor"></div>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<header class="navbar" id="navbar">
+
+    <a href="#home" class="brand">
+        CLMX <span>PROJECT</span>
+    </a>
+
+    <nav class="nav-links">
+
+        <a href="#about">Tentang</a>
+
+        <a href="#skills">Keahlian</a>
+
+        <a href="#work">Project</a>
+
+        <a href="#services">Jasa</a>
+
+        <a href="#community">Community</a>
+
+    </nav>
+
+    <a href="#contact" class="nav-contact">
+        Kontak
+    </a>
+
+</header>
+
+
+<main>
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="hero section" id="home">
+
+    <div class="hero-content">
+
+        <div class="eyebrow">
+
+            <span class="status"></span>
+
+            CLMX PROJECT / SYSTEM DEVELOPMENT
+
+        </div>
+
+        <h1>
+
+            CLMX
+
+            <span>PROJECT</span>
+
+        </h1>
+
+        <p class="hero-description">
+
+            Sebuah project yang dibangun untuk
+            mengembangkan, memodifikasi dan mengeksplorasi
+            teknologi Android, software, web dan berbagai
+            hal di dunia teknologi.
+
+        </p>
+
+        <div class="hero-actions">
+
+            <a
+                href="#work"
+                class="btn btn-primary magnetic"
+            >
+                Lihat Project
+
+                <span>↗</span>
+
+            </a>
+
+            <a
+                href="#about"
+                class="btn btn-glass magnetic"
+            >
+                Tentang CLMX
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="scroll-indicator">
+
+        <span>
+            GULIR UNTUK MENJELAJAHI
+        </span>
+
+        <div class="scroll-line"></div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     INTRO
+===================================================== -->
+
+<section class="section">
+
+    <div class="section-label reveal">
+
+        <span>01</span>
+
+        PERKENALAN
+
+    </div>
+
+
+    <div class="intro-text reveal">
+
+        <p>
+
+            Bukan hanya sebuah nama.
+
+            <span>
+                Ini adalah tempat kami bereksperimen.
+            </span>
+
+        </p>
+
+
+        <p>
+
+            CLMX PROJECT adalah project yang dibuat
+            untuk mengembangkan berbagai sistem,
+            melakukan modifikasi, membuat software,
+            website dan mengeksplorasi teknologi.
+
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     ABOUT
+===================================================== -->
+
+<section class="section" id="about">
+
+    <div class="section-label reveal">
+
+        <span>02</span>
+
+        TENTANG CLMX
+
+    </div>
+
+
+    <div class="about-grid reveal">
+
+        <div class="about-title">
+
+            <h2>
+
+                Selamat datang<br>
+
+                di <span>CLMX.</span>
+
+            </h2>
+
+        </div>
+
+
+        <div class="about-content">
+
+            <p class="large">
+
+                CLMX PROJECT dibangun oleh
+                Yami dan Sabam sebagai ruang
+                untuk mengembangkan berbagai
+                project teknologi.
+
+            </p>
+
+
+            <p>
+
+                Di dalam project ini kami melakukan
+                pengembangan dan modifikasi sistem
+                Android, pembuatan software,
+                pengembangan website serta berbagai
+                eksperimen teknologi.
+
+            </p>
+
+
+            <p>
+
+                Kami tidak membatasi CLMX hanya
+                pada satu bidang. Selama masih
+                berhubungan dengan teknologi dan
+                sesuatu yang bisa dikembangkan,
+                kami akan terus mengeksplorasinya.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     TEAM
+===================================================== -->
+
+<section class="section">
+
+    <div class="section-label reveal">
+
+        <span>03</span>
+
+        TIM CLMX
+
+    </div>
+
+
+    <div class="section-heading reveal">
+
+        <h2>
+
+            Dua orang.<br>
+
+            <span>Satu project.</span>
+
+        </h2>
+
+
+        <p>
+
+            CLMX PROJECT dikembangkan bersama
+            oleh dua orang dengan fokus dan
+            kemampuan yang saling melengkapi.
+
+        </p>
+
+    </div>
+
+
+    <div class="team-grid">
+
+        <article class="team-card reveal">
+
+            <div class="team-number">
+                CLMX / 01
+            </div>
+
+
+            <div class="team-avatar">
+                Y
+            </div>
+
+
+            <h3>
+                Yami
+            </h3>
+
+
+            <p>
+
+                Android Development,
+                Android Modding,
+                System Optimization,
+                Software dan Web Development.
+
+            </p>
+
+        </article>
+
+
+        <article class="team-card reveal">
+
+            <div class="team-number">
+                CLMX / 02
+            </div>
+
+
+            <div class="team-avatar">
+                S
+            </div>
+
+
+            <h3>
+                Sabam
+            </h3>
+
+
+            <p>
+
+                Pengembangan project,
+                teknologi, support system
+                dan berbagai eksperimen
+                di dalam CLMX PROJECT.
+
+            </p>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     SKILLS
+===================================================== -->
+
+<section class="section" id="skills">
+
+    <div class="section-label reveal">
+
+        <span>04</span>
+
+        KEAHLIAN
+
+    </div>
+
+
+    <div class="section-heading reveal">
+
+        <h2>
+
+            Yang kami<br>
+
+            <span>kerjakan.</span>
+
+        </h2>
+
+
+        <p>
+
+            Berbagai bidang yang menjadi fokus
+            pengembangan dan eksperimen CLMX PROJECT.
+
+        </p>
+
+    </div>
+
+
+    <div class="skills-grid">
+
+
+        <article class="glass-card reveal">
+
+            <div class="card-number">
+                01
+            </div>
+
+
+            <div class="card-icon">
+                ◉
+            </div>
+
+
+            <h3>
+                Android Development
+            </h3>
+
+
+            <p>
+
+                Pengembangan, modifikasi dan
+                eksplorasi sistem Android.
+
+            </p>
+
+
+            <div class="tags">
+
+                <span>Android</span>
+
+                <span>System</span>
+
+                <span>Development</span>
+
+            </div>
+
+        </article>
+
+
+        <article class="glass-card reveal">
+
+            <div class="card-number">
+                02
+            </div>
+
+
+            <div class="card-icon">
+                ⌘
+            </div>
+
+
+            <h3>
+                Android Modding
+            </h3>
+
+
+            <p>
+
+                Oprek perangkat, root, module,
+                custom system dan optimasi.
+
+            </p>
+
+
+            <div class="tags">
+
+                <span>Root</span>
+
+                <span>Module</span>
+
+                <span>Custom</span>
+
+            </div>
+
+        </article>
+
+
+        <article class="glass-card reveal">
+
+            <div class="card-number">
+                03
+            </div>
+
+
+            <div class="card-icon">
+                ◇
+            </div>
+
+
+            <h3>
+                Software Engineering
+            </h3>
+
+
+            <p>
+
+                Membangun software dan tools
+                dengan fokus pada struktur,
+                fungsi dan performa.
+
+            </p>
+
+
+            <div class="tags">
+
+                <span>Software</span>
+
+                <span>Tools</span>
+
+                <span>Engineering</span>
+
+            </div>
+
+        </article>
+
+
+        <article class="glass-card reveal">
+
+            <div class="card-number">
+                04
+            </div>
+
+
+            <div class="card-icon">
+                ⌬
+            </div>
+
+
+            <h3>
+                Web Development
+            </h3>
+
+
+            <p>
+
+                Membuat website modern,
+                responsif dan interaktif.
+
+            </p>
+
+
+            <div class="tags">
+
+                <span>HTML</span>
+
+                <span>CSS</span>
+
+                <span>JavaScript</span>
+
+            </div>
+
+        </article>
+
+
+        <article class="glass-card reveal">
+
+            <div class="card-number">
+                05
+            </div>
+
+
+            <div class="card-icon">
+                ⚙
+            </div>
+
+
+            <h3>
+                System Optimization
+            </h3>
+
+
+            <p>
+
+                Eksperimen dan pengembangan
+                sistem untuk mendapatkan
+                pengalaman penggunaan yang
+                lebih optimal.
+
+            </p>
+
+
+            <div class="tags">
+
+                <span>Performance</span>
+
+                <span>System</span>
+
+                <span>Optimization</span>
+
+            </div>
+
+        </article>
+
+
+        <article class="glass-card reveal">
+
+            <div class="card-number">
+                06
+            </div>
+
+
+            <div class="card-icon">
+                ∞
+            </div>
+
+
+            <h3>
+                Eksperimen Teknologi
+            </h3>
+
+
+            <p>
+
+                Mencoba, mempelajari dan
+                mengembangkan berbagai
+                teknologi baru.
+
+            </p>
+
+
+            <div class="tags">
+
+                <span>Research</span>
+
+                <span>Experiment</span>
+
+                <span>Technology</span>
+
+            </div>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     PROJECTS
+===================================================== -->
+
+<section class="section" id="work">
+
+    <div class="section-label reveal">
+
+        <span>05</span>
+
+        PROJECT
+
+    </div>
+
+
+    <div class="section-heading reveal">
+
+        <h2>
+
+            Yang sedang<br>
+
+            <span>kami bangun.</span>
+
+        </h2>
+
+
+        <p>
+
+            Beberapa bagian dari perjalanan
+            dan pengembangan CLMX PROJECT.
+
+        </p>
+
+    </div>
+
+
+    <div class="projects">
+
+
+        <article class="project reveal">
+
+            <div class="project-visual">
+
+                <span class="project-label">
+                    PROJECT 01 / ANDROID
+                </span>
+
+
+                <span class="project-logo">
+                    CLMX
+                </span>
+
+            </div>
+
+
+            <div class="project-info">
+
+                <div>
+
+                    <span class="category">
+                        ANDROID / SYSTEM
+                    </span>
+
+
+                    <h3>
+                        Pengembangan Sistem Android
+                    </h3>
+
+                </div>
+
+
+                <a href="#" class="project-link">
+                    Lihat Project ↗
+                </a>
+
+            </div>
+
+        </article>
+
+
+        <div class="project-row">
+
+
+            <article class="project reveal">
+
+                <div class="project-visual">
+
+                    <span class="project-label">
+                        PROJECT 02
+                    </span>
+
+
+                    <span class="project-logo">
+                        MOD
+                    </span>
+
+                </div>
+
+
+                <div class="project-info">
+
+                    <span class="category">
+                        ANDROID / MODDING
+                    </span>
+
+
+                    <h3>
+                        Custom Module
+                    </h3>
+
+
+                    <a href="#" class="project-link">
+                        Lihat Project ↗
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <article class="project reveal">
+
+                <div class="project-visual">
+
+                    <span class="project-label">
+                        PROJECT 03
+                    </span>
+
+
+                    <span class="project-logo">
+                        WEB
+                    </span>
+
+                </div>
+
+
+                <div class="project-info">
+
+                    <span class="category">
+                        WEB DEVELOPMENT
+                    </span>
+
+
+                    <h3>
+                        Website & Software
+                    </h3>
+
+
+                    <a href="#" class="project-link">
+                        Lihat Project ↗
+                    </a>
+
+                </div>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     SERVICES
+===================================================== -->
+
+<section class="section" id="services">
+
+    <div class="section-label reveal">
+
+        <span>06</span>
+
+        JASA CLMX
+
+    </div>
+
+
+    <div class="section-heading reveal">
+
+        <h2>
+
+            Butuh<br>
+
+            <span>bantuan?</span>
+
+        </h2>
+
+
+        <p>
+
+            CLMX PROJECT juga menyediakan
+            beberapa layanan untuk kebutuhan
+            Android dan digital.
+
+        </p>
+
+    </div>
+
+
+    <div class="services-list">
+
+
+        <article class="service reveal">
+
+            <span class="service-num">
+                01
+            </span>
+
+
+            <div>
+
+                <h3>
+                    Oprek HP
+                </h3>
+
+
+                <p>
+
+                    Bantuan oprek Android,
+                    root, custom ROM,
+                    konfigurasi dan modifikasi
+                    sistem.
+
+                </p>
+
+            </div>
+
+
+            <span class="service-arrow">
+                ↗
+            </span>
+
+        </article>
+
+
+        <article class="service reveal">
+
+            <span class="service-num">
+                02
+            </span>
+
+
+            <div>
+
+                <h3>
+                    Custom Module
+                </h3>
+
+
+                <p>
+
+                    Pembuatan atau custom module
+                    sesuai kebutuhan perangkat
+                    dan sistem Android.
+
+                </p>
+
+            </div>
+
+
+            <span class="service-arrow">
+                ↗
+            </span>
+
+        </article>
+
+
+        <article class="service reveal">
+
+            <span class="service-num">
+                03
+            </span>
+
+
+            <div>
+
+                <h3>
+                    Pembuatan Website
+                </h3>
+
+
+                <p>
+
+                    Website pribadi, portfolio,
+                    landing page dan website
+                    custom sesuai kebutuhan.
+
+                </p>
+
+            </div>
+
+
+            <span class="service-arrow">
+                ↗
+            </span>
+
+        </article>
+
+
+        <article class="service reveal">
+
+            <span class="service-num">
+                04
+            </span>
+
+
+            <div>
+
+                <h3>
+                    Konsultasi Teknologi
+                </h3>
+
+
+                <p>
+
+                    Diskusi dan konsultasi seputar
+                    Android, software, web dan
+                    berbagai kebutuhan teknologi.
+
+                </p>
+
+            </div>
+
+
+            <span class="service-arrow">
+                ↗
+            </span>
+
+        </article>
+
+    </div>
+
+
+    <div class="note">
+
+        <span>ⓘ</span>
+
+        <span>
+            Untuk layanan hardware, fokus pada
+            penggantian sparepart tertentu dan
+            bukan perbaikan mesin / motherboard.
+        </span>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     NOCI STORE
+===================================================== -->
+
+<section class="section">
+
+    <div class="section-label reveal">
+
+        <span>07</span>
+
+        NOCI STORE
+
+    </div>
+
+
+    <div class="section-heading reveal">
+
+        <h2>
+
+            Kebutuhan<br>
+
+            <span>gaming.</span>
+
+        </h2>
+
+
+        <p>
+
+            CLMX PROJECT juga memiliki akses
+            ke NOCI STORE untuk kebutuhan top up
+            dan berbagai kebutuhan game lainnya.
+
+        </p>
+
+    </div>
+
+
+    <div class="store-box reveal">
+
+        <div class="store-glow"></div>
+
+
+        <div class="store-content">
+
+            <div class="store-badge">
+
+                STORE / GAMING
+
+            </div>
+
+
+            <h3>
+
+                NOCI
+                <span>STORE.</span>
+
+            </h3>
+
+
+            <p>
+
+                Tempat untuk top up dan berbagai
+                kebutuhan game lainnya.
+                Untuk order atau pertanyaan,
+                langsung hubungi NOCI STORE.
+
+            </p>
+
+
+            <a
+                href="https://wa.me/6289673601892"
+                target="_blank"
+                class="store-button"
+            >
+
+                Chat NOCI STORE
+
+                <span>↗</span>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     COMMUNITY
+===================================================== -->
+
+<section class="section" id="community">
+
+    <div class="section-label reveal">
+
+        <span>08</span>
+
+        COMMUNITY
+
+    </div>
+
+
+    <div class="section-heading reveal">
+
+        <h2>
+
+            Masuk ke<br>
+
+            <span>komunitas.</span>
+
+        </h2>
+
+
+        <p>
+
+            Tempat untuk berbagi informasi,
+            project, update dan berdiskusi
+            bersama.
+
+        </p>
+
+    </div>
+
+
+    <div class="community-grid">
+
+
+        <article class="community-card reveal">
+
+            <div>
+
+                <div class="community-icon">
+                    ✈
+                </div>
+
+
+                <h3>
+                    Telegram
+                </h3>
+
+
+                <p>
+                    Arsip dan komunitas CLMX.
+                </p>
+
+            </div>
+
+
+            <a
+                href="https://t.me/arsipsecret"
+                target="_blank"
+                class="community-link"
+            >
+
+                Gabung Telegram ↗
+
+            </a>
+
+        </article>
+
+
+        <article class="community-card reveal">
+
+            <div>
+
+                <div class="community-icon">
+                    ♪
+                </div>
+
+
+                <h3>
+                    TikTok
+                </h3>
+
+
+                <p>
+                    Konten dan update CLMX.
+                </p>
+
+            </div>
+
+
+            <a
+                href="#"
+                class="community-link"
+            >
+
+                Segera hadir ↗
+
+            </a>
+
+        </article>
+
+
+        <article class="community-card reveal">
+
+            <div>
+
+                <div class="community-icon">
+                    ◇
+                </div>
+
+
+                <h3>
+                    Discord
+                </h3>
+
+
+                <p>
+                    Ruang diskusi dan komunitas.
+                </p>
+
+            </div>
+
+
+            <a
+                href="#"
+                class="community-link"
+            >
+
+                Segera hadir ↗
+
+            </a>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     CONTACT
+===================================================== -->
+
+<section class="section contact" id="contact">
+
+    <div class="contact-box reveal">
+
+        <div class="contact-ring"></div>
+
+
+        <div class="contact-content">
+
+            <span class="contact-small">
+
+                MAU ORDER / TANYA?
+
+            </span>
+
+
+            <h2>
+
+                Hubungi<br>
+
+                <span>kami.</span>
+
+            </h2>
+
+
+            <p>
+
+                Mau order jasa, custom module,
+                website atau sekadar bertanya
+                tentang CLMX PROJECT?
+                Langsung chat salah satu dari kami.
+
+            </p>
+
+
+            <div class="contact-buttons">
+
+
+                <a
+                    href="https://wa.me/6283852962061"
+                    target="_blank"
+                    class="whatsapp magnetic"
+                >
+
+                    Yami
+
+                    <span>↗</span>
+
+                </a>
+
+
+                <a
+                    href="https://wa.me/6289673601892"
+                    target="_blank"
+                    class="whatsapp secondary magnetic"
+                >
+
+                    Sabam
+
+                    <span>↗</span>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <div class="footer-top">
+
+        <a href="#home" class="footer-brand">
+
+            CLMX PROJECT
+
+        </a>
+
+
+        <p>
+
+            Dibangun oleh Yami & Sabam.<br>
+
+            Teknologi • Modifikasi • Pengembangan
+
+        </p>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <span>
+
+            © 2026 CLMX PROJECT
+
+        </span>
+
+
+        <span>
+
+            DIBUAT DENGAN TEKNOLOGI
+
+        </span>
+
+    </div>
+
+</footer>
+
+
+<script>
+
+/* =====================================================
+   PRELOADER
+===================================================== */
+
+const preloader =
+    document.getElementById("preloader");
+
+window.addEventListener("load",()=>{
+
+    setTimeout(()=>{
+
+        preloader.classList.add("hide");
+
+        document.body.classList.remove("loading");
+
+    },900);
+
+});
+
+
+/* =====================================================
+   NAVBAR
+===================================================== */
+
+const navbar =
+    document.getElementById("navbar");
+
+window.addEventListener("scroll",()=>{
+
+    if(window.scrollY > 70){
+
+        navbar.classList.add("scrolled");
+
+    }else{
+
+        navbar.classList.remove("scrolled");
+
+    }
+
+},{passive:true});
+
+
+/* =====================================================
+   CURSOR
+===================================================== */
+
+const cursor =
+    document.getElementById("cursor");
+
+if(
+    cursor &&
+    matchMedia("(pointer:fine)").matches
+){
+
+    let mx = innerWidth / 2;
+    let my = innerHeight / 2;
+
+    let cx = mx;
+    let cy = my;
+
+    window.addEventListener("mousemove",(e)=>{
+
+        mx = e.clientX;
+        my = e.clientY;
+
+    });
+
+
+    function cursorLoop(){
+
+        cx += (mx - cx) * .075;
+        cy += (my - cy) * .075;
+
+        cursor.style.left =
+            cx + "px";
+
+        cursor.style.top =
+            cy + "px";
+
+        requestAnimationFrame(cursorLoop);
+
+    }
+
+    cursorLoop();
+
+}
+
+
+/* =====================================================
+   REVEAL
+===================================================== */
+
+const revealElements =
+    document.querySelectorAll(".reveal");
+
+const revealObserver =
+    new IntersectionObserver(
+        (entries)=>{
+
+            entries.forEach(entry=>{
+
+                if(entry.isIntersecting){
+
+                    entry.target.classList.add(
+                        "show"
+                    );
+
+                    revealObserver.unobserve(
+                        entry.target
+                    );
+
+                }
+
+            });
+
+        },
+        {
+            threshold:.12,
+            rootMargin:
+                "0px 0px -55px 0px"
+        }
+    );
+
+
+revealElements.forEach(
+    (element,index)=>{
+
+        element.style.transitionDelay =
+            Math.min(
+                index * .035,
+                .24
+            ) + "s";
+
+        revealObserver.observe(element);
+
+    }
+);
+
+
+/* =====================================================
+   3D GLASS TILT
+===================================================== */
+
+document
+.querySelectorAll(".glass-card")
+.forEach(card=>{
+
+    card.addEventListener(
+        "mousemove",
+        (e)=>{
+
+            if(innerWidth < 768) return;
+
+            const rect =
+                card.getBoundingClientRect();
+
+            const x =
+                e.clientX - rect.left;
+
+            const y =
+                e.clientY - rect.top;
+
+            const rotateX =
+                ((y - rect.height / 2) /
+                (rect.height / 2)) * -3;
+
+            const rotateY =
+                ((x - rect.width / 2) /
+                (rect.width / 2)) * 3;
+
+            card.style.transform =
+                `perspective(900px)
+                 rotateX(${rotateX}deg)
+                 rotateY(${rotateY}deg)
+                 translateY(-5px)`;
+
+        }
+    );
+
+
+    card.addEventListener(
+        "mouseleave",
+        ()=>{
+
+            card.style.transform =
+                "perspective(900px) rotateX(0deg) rotateY(0deg) translateY(0)";
+
+        }
+    );
+
+});
+
+
+/* =====================================================
+   MAGNETIC
+===================================================== */
+
+document
+.querySelectorAll(".magnetic")
+.forEach(button=>{
+
+    button.addEventListener(
+        "mousemove",
+        (e)=>{
+
+            if(innerWidth < 768) return;
+
+            const rect =
+                button.getBoundingClientRect();
+
+            const x =
+                e.clientX -
+                rect.left -
+                rect.width / 2;
+
+            const y =
+                e.clientY -
+                rect.top -
+                rect.height / 2;
+
+            button.style.transform =
+                `translate(
+                    ${x * .1}px,
+                    ${y * .1}px
+                )`;
+
+        }
+    );
+
+
+    button.addEventListener(
+        "mouseleave",
+        ()=>{
+
+            button.style.transform = "";
+
+        }
+    );
+
+});
+
+
+/* =====================================================
+   SMOOTH ANCHOR
+===================================================== */
+
+document
+.querySelectorAll('a[href^="#"]')
+.forEach(link=>{
+
+    link.addEventListener(
+        "click",
+        (e)=>{
+
+            const id =
+                link.getAttribute("href");
+
+            if(id === "#") return;
+
+            const target =
+                document.querySelector(id);
+
+            if(!target) return;
+
+            e.preventDefault();
+
+            target.scrollIntoView({
+
+                behavior:"smooth",
+
+                block:"start"
+
+            });
+
+        }
+    );
+
+});
+
+
+/* =====================================================
+   PROJECT PARALLAX
+===================================================== */
+
+const projectLogos =
+    document.querySelectorAll(
+        ".project-logo"
+    );
+
+window.addEventListener(
+    "scroll",
+    ()=>{
+
+        projectLogos.forEach(logo=>{
+
+            const rect =
+                logo.getBoundingClientRect();
+
+            if(
+                rect.bottom < 0 ||
+                rect.top > innerHeight
+            ) return;
+
+            const distance =
+                (
+                    rect.top +
+                    rect.height / 2
+                ) -
+                innerHeight / 2;
+
+            logo.style.translate =
+                `0 ${distance * -.025}px`;
+
+        });
+
+    },
+    {passive:true}
+);
+
+
+/* =====================================================
+   TOUCH FEEDBACK
+===================================================== */
+
+document
+.querySelectorAll(
+    ".btn,.whatsapp,.nav-contact,.store-button"
+)
+.forEach(button=>{
+
+    button.addEventListener(
+        "touchstart",
+        ()=>{
+
+            button.style.transform =
+                "scale(.96)";
+
+        },
+        {passive:true}
+    );
+
+
+    button.addEventListener(
+        "touchend",
+        ()=>{
+
+            button.style.transform = "";
+
+        },
+        {passive:true}
+    );
+
+});
+
+
+/* =====================================================
+   START POSITION
+===================================================== */
+
+if("scrollRestoration" in history){
+
+    history.scrollRestoration = "manual";
+
+}
+
+window.addEventListener(
+    "load",
+    ()=>{
+
+        if(location.hash){
+
+            setTimeout(()=>{
+
+                history.replaceState(
+                    null,
+                    "",
+                    location.pathname
+                );
+
+                window.scrollTo(0,0);
+
+            },50);
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
