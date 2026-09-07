@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Projects | CLMX</title>
+
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+
+<style>
+
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Inter,sans-serif;
+}
+
+
+
+html{
+scroll-behavior:smooth;
+}
+
+
+
+body{
+
+background:#05070a;
+color:white;
+overflow-x:hidden;
+
+}
+
+
+
+body:before{
+
+content:"";
+
+position:fixed;
+
+width:600px;
+height:600px;
+
+background:#006eff;
+
+filter:blur(200px);
+
+opacity:.15;
+
+top:-250px;
+
+left:-200px;
+
+z-index:-1;
+
+}
+
+
+
+
+.container{
+
+width:90%;
+max-width:1100px;
+
+margin:auto;
+
+}
+
+
+
+
+/* NAV */
+
+
+nav{
+
+margin-top:20px;
+
+height:75px;
+
+padding:0 30px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+
+background:#ffffff08;
+
+border:1px solid #ffffff15;
+
+border-radius:25px;
+
+backdrop-filter:blur(20px);
+
+position:sticky;
+
+top:20px;
+
+z-index:10;
+
+}
+
+
+
+
+.logo{
+
+font-size:27px;
+
+font-weight:800;
+
+letter-spacing:5px;
+
+}
+
+
+
+.logo span{
+
+color:#168cff;
+
+}
+
+
+
+
+.nav-links{
+
+display:flex;
+
+gap:25px;
+
+}
+
+
+
+
+.nav-links a{
+
+color:#888;
+
+text-decoration:none;
+
+font-size:14px;
+
+transition:.3s;
+
+}
+
+
+
+.nav-links a:hover{
+
+color:white;
+
+}
+
+
+
+
+
+/* HERO */
+
+
+.hero{
+
+padding:100px 0 60px;
+
+}
+
+
+
+
+.label{
+
+color:#168cff;
+
+font-size:12px;
+
+letter-spacing:5px;
+
+}
+
+
+
+
+
+.hero h1{
+
+font-size:80px;
+
+letter-spacing:-5px;
+
+margin-top:25px;
+
+}
+
+
+
+
+.hero p{
+
+margin-top:25px;
+
+max-width:650px;
+
+color:#888;
+
+line-height:1.8;
+
+}
+
+
+
+
+
+/* PROJECT */
+
+
+.project{
+
+background:#0b0d10;
+
+border:1px solid #222;
+
+border-radius:35px;
+
+margin:35px 0;
+
+overflow:hidden;
+
+transition:.4s;
+
+}
+
+
+
+.project:hover{
+
+transform:translateY(-10px);
+
+border-color:#168cff;
+
+}
+
+
+
+
+
+.preview{
+
+height:220px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+
+background:linear-gradient(135deg,#111827,#05070a);
+
+
+font-size:40px;
+
+font-weight:800;
+
+color:#ffffff18;
+
+}
+
+
+
+
+
+.content{
+
+padding:40px;
+
+}
+
+
+
+
+
+.status{
+
+display:inline-block;
+
+padding:8px 16px;
+
+border-radius:50px;
+
+background:#168cff20;
+
+color:#168cff;
+
+font-size:12px;
+
+letter-spacing:1px;
+
+}
+
+
+
+
+
+.content h2{
+
+font-size:35px;
+
+margin-top:20px;
+
+}
+
+
+
+
+.content p{
+
+margin-top:15px;
+
+color:#888;
+
+line-height:1.8;
+
+}
+
+
+
+
+
+.info{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+
+gap:20px;
+
+margin-top:30px;
+
+}
+
+
+
+
+
+.box{
+
+background:#111;
+
+border:1px solid #222;
+
+padding:20px;
+
+border-radius:20px;
+
+}
+
+
+
+.box p{
+
+font-size:14px;
+
+}
+
+
+
+
+
+.tech{
+
+margin-top:25px;
+
+}
+
+
+
+
+.tech span{
+
+display:inline-block;
+
+padding:10px 15px;
+
+border:1px solid #333;
+
+border-radius:50px;
+
+margin:5px;
+
+color:#aaa;
+
+font-size:13px;
+
+}
+
+
+
+
+
+.buttons{
+
+margin-top:30px;
+
+}
+
+
+
+
+
+.btn{
+
+display:inline-block;
+
+padding:14px 25px;
+
+border-radius:50px;
+
+background:white;
+
+color:black;
+
+text-decoration:none;
+
+font-weight:600;
+
+margin-right:10px;
+
+}
+
+
+
+
+
+.btn.dark{
+
+background:#111;
+
+color:white;
+
+border:1px solid #333;
+
+}
+
+
+
+
+footer{
+
+padding:50px 0;
+
+text-align:center;
+
+color:#555;
+
+}
+
+
+
+
+@media(max-width:600px){
+
+.hero h1{
+
+font-size:60px;
+
+}
+
+
+.content{
+
+padding:30px;
+
+}
+
+}
+
+
+</style>
+
+
+</head>
+
+
+
+<body>
+
+
+
+<div class="container">
+
+
+
+<nav>
+
+
+<div class="logo">
+
+CLMX<span>.</span>
+
+</div>
+
+
+<div class="nav-links">
+
+
+<a href="index.html">
+Home
+</a>
+
+
+<a href="projects.html">
+Projects
+</a>
+
+
+<a href="contact.html">
+Contact
+</a>
+
+
+</div>
+
+
+</nav>
+
+
+
+
+
+
+
+
+
+<div class="hero">
+
+
+<div class="label">
+
+CLMX PROJECT / PORTFOLIO
+
+</div>
+
+
+
+<h1>
+
+Selected<br>
+Works.
+
+</h1>
+
+
+
+<p>
+
+A collection of projects developed under CLMX Project.
+Focused on Android development, software engineering,
+system optimization and digital solutions by Yami (Bay).
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- ANDROID -->
+
+
+<div class="project">
+
+
+<div class="preview">
+
+ANDROID
+
+</div>
+
+
+
+<div class="content">
+
+
+<span class="status">
+
+IN DEVELOPMENT
+
+</span>
+
+
+
+<h2>
+
+Android Development
+
+</h2>
+
+
+
+<p>
+
+Creating Android applications, custom tools and
+mobile solutions focused on performance,
+stability and modern user experience.
+
+</p>
+
+
+
+<div class="info">
+
+
+<div class="box">
+
+<h4>
+Challenge
+</h4>
+
+
+<p>
+
+Building efficient applications with smooth performance.
+
+</p>
+
+
+</div>
+
+
+
+<div class="box">
+
+<h4>
+Solution
+</h4>
+
+
+<p>
+
+Clean architecture and optimized development workflow.
+
+</p>
+
+
+</div>
+
+
+</div>
+
+
+
+<div class="tech">
+
+<span>
+Android
+</span>
+
+<span>
+Kotlin
+</span>
+
+<span>
+Java
+</span>
+
+
+</div>
+
+
+
+<div class="buttons">
+
+<a href="#" class="btn">
+
+Demo
+
+</a>
+
+
+<a href="#" class="btn dark">
+
+Source
+
+</a>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- OPTIMIZATION -->
+
+
+<div class="project">
+
+
+<div class="preview">
+
+SYSTEM
+
+</div>
+
+
+
+<div class="content">
+
+
+<span class="status">
+
+RESEARCH
+
+</span>
+
+
+
+<h2>
+
+Optimization Engine
+
+</h2>
+
+
+
+<p>
+
+Experimental system optimization project focused on
+Android performance, resource management and
+device efficiency.
+
+</p>
+
+
+
+
+<div class="info">
+
+
+<div class="box">
+
+<h4>
+Focus
+</h4>
+
+
+<p>
+
+Performance tuning and system research.
+
+</p>
+
+
+</div>
+
+
+
+<div class="box">
+
+<h4>
+Platform
+</h4>
+
+
+<p>
+
+Android / Linux environment.
+
+</p>
+
+
+</div>
+
+
+</div>
+
+
+
+<div class="tech">
+
+<span>
+Linux
+</span>
+
+<span>
+Shell
+</span>
+
+<span>
+Android
+</span>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- WEB -->
+
+
+<div class="project">
+
+
+<div class="preview">
+
+WEB
+
+</div>
+
+
+
+<div class="content">
+
+
+<span class="status">
+
+AVAILABLE
+
+</span>
+
+
+
+<h2>
+
+Web Solutions
+
+</h2>
+
+
+
+<p>
+
+Modern responsive websites for companies,
+brands and personal portfolios with premium
+design and performance.
+
+</p>
+
+
+
+<div class="tech">
+
+
+<span>
+HTML
+</span>
+
+
+<span>
+CSS
+</span>
+
+
+<span>
+JavaScript
+</span>
+
+
+</div>
+
+
+
+<div class="buttons">
+
+
+<a href="#" class="btn">
+
+Preview
+
+</a>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- NOCI -->
+
+
+<div class="project">
+
+
+<div class="preview">
+
+NOCI
+
+</div>
+
+
+
+<div class="content">
+
+
+<span class="status">
+
+ACTIVE
+
+</span>
+
+
+
+<h2>
+
+NOCI STORE
+
+</h2>
+
+
+
+<p>
+
+Digital gaming marketplace under CLMX Project.
+Providing game top up services, vouchers and
+gaming solutions.
+
+</p>
+
+
+
+
+<div class="info">
+
+
+<div class="box">
+
+<h4>
+Service
+</h4>
+
+
+<p>
+
+Game top up and digital products.
+
+</p>
+
+
+</div>
+
+
+
+<div class="box">
+
+<h4>
+Category
+</h4>
+
+
+<p>
+
+Gaming marketplace.
+
+</p>
+
+
+</div>
+
+
+</div>
+
+
+
+<div class="tech">
+
+
+<span>
+Mobile Legends
+</span>
+
+
+<span>
+PUBG
+</span>
+
+
+<span>
+Roblox
+</span>
+
+
+<span>
+Free Fire
+</span>
+
+
+</div>
+
+
+
+
+<div class="buttons">
+
+
+<a href="#" class="btn">
+
+Order
+
+</a>
+
+
+
+<a href="#" class="btn dark">
+
+WhatsApp
+
+</a>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<footer>
+
+© 2026 CLMX PROJECT
+
+<br>
+
+Built by Yami (Bay)
+
+</footer>
+
+
+
+
+</div>
+
+
+</body>
+
+</html>
